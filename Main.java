@@ -21,6 +21,15 @@ public class Main {
         productos.buscarProducto("Laptop").disminuirUnidades(10);
         productos.eliminarProducto("Laptop");
 
+        //Agrego datos para tener en el reporte
+        productos.agregarProductoInicio(new Producto("Teclado", "Electronica", "", 45, null));
+        productos.buscarProducto("Teclado").agregarUnidades(8);
+        productos.buscarProducto("Mouse").agregarUnidades(15);
+
         System.out.println(productos.toString());
+
+        // llamada de metodo de generar reporte.
+        System.out.println("--- Probando reporte ---");
+        productos.generarReporteCostos();
     }
 }
