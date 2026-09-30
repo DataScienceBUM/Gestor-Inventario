@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 public class Producto {
@@ -6,8 +7,7 @@ public class Producto {
     private ArrayList<String> pathImagenes;
     private Producto siguienteProducto;
 
-    public Producto(String nombre, String categoria, String fechaVencimiento, int precio,
-            ArrayList<String> pathImagenes) {
+    public Producto(String nombre, String categoria, String fechaVencimiento, int precio, ArrayList<String> pathImagenes) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
@@ -41,6 +41,48 @@ public class Producto {
 
         setCantidad(getCantidad() - unidades);
         System.out.println("Unidades disminuidas correctamente");
+    }
+
+    //IMAGENES
+    public void agregarImagen(String ruta) {
+        if (pathImagenes == null) {
+            pathImagenes = new ArrayList<>();
+        }
+        File archivo = new File(ruta);
+        if (!archivo.exists()) {
+            System.out.println("Error:No se encontro la imagen en " + ruta);
+            return;
+        }
+        if (pathImagenes.contains(ruta)) {
+            System.out.println("Esa imagen ya esta registrada");
+            return;
+        }
+        pathImagenes.add(ruta);
+        System.out.println("Imagen agregada correctamente");
+    }
+
+    public void eliminarImagen(String ruta) {
+        if (pathImagenes == null) {
+            pathImagenes = new ArrayList<>();
+        }
+        if (pathImagenes.remove(ruta)) {
+            System.out.println("Imagen eliminada correctamente");
+        } else {
+            System.out.println("Esa imagen no esta registrada en el producto");
+        }
+    }
+
+    public void mostrarImagenes() {
+        if (pathImagenes == null) {
+            pathImagenes = new ArrayList<>();
+        }
+        if (pathImagenes.isEmpty()) {
+            System.out.println("El producto no tiene imagenes");
+            return;
+        }
+        for (int i = 0; i < pathImagenes.size(); i++) {
+            System.out.println((i + 1) + ". " + pathImagenes.get(i));
+        }
     }
 
     // Getters y setters
@@ -89,7 +131,7 @@ public class Producto {
     }
 
     public void setPathImagenes(ArrayList<String> pathImagenes) {
-        this.pathImagenes = pathImagenes;
+        this.pathImagenes = (pathImagenes != null) ? pathImagenes : new ArrayList<>();
     }
 
     public Producto getSiguienteProducto() {
@@ -101,10 +143,13 @@ public class Producto {
     }
 
     @Override
-
     public String toString() {
+        if (pathImagenes == null) {
+            pathImagenes = new ArrayList<>();
+        }
+        String imagenes = pathImagenes.isEmpty() ? "Sin imagenes" : String.join(", ", pathImagenes);
         return "Nombre: " + nombre + "\nCategoria: " + categoria + "\nFecha de vencimiento: "
-                + fechaVencimiento + "\nPrecio: " + precio + "\nCantidad: " + cantidad;
+                + fechaVencimiento + "\nPrecio: " + precio + "\nCantidad: " + cantidad
+                + "\nImagenes: " + imagenes;
     }
-
 }

@@ -7,6 +7,13 @@ public class Main {
         productos.agregarProductoInicio(new Producto("Laptop", "Electronica", "", 1000, null));
         productos.agregarProductoFinal(new Producto("Mouse", "Electronica", "", 10, null));
 
+        //pruebas de Imagen
+        productos.buscarProducto("Laptop").agregarImagen("imagenes/laptop.jpg");
+        productos.buscarProducto("Mouse").agregarImagen("imagenes/mouse.jpg");
+        productos.buscarProducto("Laptop").agregarImagen("imagenes/noexiste.jpg");
+        productos.buscarProducto("Laptop").agregarImagen("imagenes/laptop.jpg");
+
+
         System.out.println(productos.toString());
 
         productos.buscarProducto("Mouse").setPrecio(20);
@@ -25,6 +32,13 @@ public class Main {
         productos.agregarProductoInicio(new Producto("Teclado", "Electronica", "", 45, null));
         productos.buscarProducto("Teclado").agregarUnidades(8);
         productos.buscarProducto("Mouse").agregarUnidades(15);
+
+
+        // Mostrar  y eliminar imagenes
+        productos.buscarProducto("Mouse").mostrarImagenes();
+        productos.buscarProducto("Mouse").eliminarImagen("imagenes/mouse.jpg");
+        productos.buscarProducto("Mouse").mostrarImagenes();
+
 
         System.out.println(productos.toString());
 
