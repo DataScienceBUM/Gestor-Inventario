@@ -8,13 +8,13 @@ public class Producto {
     private ArrayList<String> pathImagenes;
     private Producto siguienteProducto;
 
-    public Producto(String nombre, String categoria, String fechaVencimiento, double precio, ArrayList<String> pathImagenes) {
+    public Producto(String nombre, String categoria, String fechaVencimiento, double precio) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
         this.precio = precio;
         this.cantidad = 0;
-        this.pathImagenes = pathImagenes;
+        this.pathImagenes = null;
         this.siguienteProducto = null;
     }
 
@@ -44,7 +44,7 @@ public class Producto {
         System.out.println("Unidades disminuidas correctamente");
     }
 
-    //IMAGENES
+    // IMAGENES
     public void agregarImagen(String ruta) {
         if (pathImagenes == null) {
             pathImagenes = new ArrayList<>();

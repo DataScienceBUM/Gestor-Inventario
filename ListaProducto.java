@@ -104,32 +104,34 @@ public class ListaProducto {
         return null;
 
     }
-    //Metodo para generar el reporte de costos - Yen Lee
-    public void generarReporteCostos () {
-        if  (estaVacia()) {
+
+    // Metodo para generar el reporte de costos - Yen Lee
+    public void generarReporteCostos() {
+        if (estaVacia()) {
             System.out.println("No se puede generar el reporte: La lista de inventario está vacía. ");
             return;
         }
         System.out.println("\n===Reporte de costos de inventario===\n");
-        System.out.println(String.format("%-20s %-15s %-10s %-15s", "Producto", "Precio Unitario", "Cantidad", "Costo Total"));
+        System.out.println(
+                String.format("%-20s %-15s %-10s %-15s", "Producto", "Precio Unitario", "Cantidad", "Costo Total"));
         System.out.println("======================================");
 
         Producto tempProducto = getPrimerProducto();
         double costoTotalAcumulado = 0.0;
 
-        //Recorrido de la lista
+        // Recorrido de la lista
         while (tempProducto != null) {
-            //Calculamos el subtotal: precio * cantidad
+            // Calculamos el subtotal: precio * cantidad
             double subtotalProducto = tempProducto.getPrecio() * tempProducto.getCantidad();
             costoTotalAcumulado += subtotalProducto;
 
-            //Imprimir la fila del producto (formateada para que se vea como una tabla)
+            // Imprimir la fila del producto (formateada para que se vea como una tabla)
             System.out.println(String.format("%-20s %-14s %-10d %-14.2f",
-            tempProducto.getNombre(),
-            tempProducto.getPrecio(),
-            tempProducto.getCantidad(),
-            subtotalProducto));
-            //Avanzamos con el siguiente nodo
+                    tempProducto.getNombre(),
+                    tempProducto.getPrecio(),
+                    tempProducto.getCantidad(),
+                    subtotalProducto));
+            // Avanzamos con el siguiente nodo
             tempProducto = tempProducto.getSiguienteProducto();
         }
 
@@ -137,7 +139,6 @@ public class ListaProducto {
         System.out.println("Costo Total Acumulado del inventario: " + String.format("%.2f", costoTotalAcumulado));
         System.out.println("=======================================\n");
     }
-
 
     @Override
     public String toString() {
