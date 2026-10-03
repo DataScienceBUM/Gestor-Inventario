@@ -48,6 +48,7 @@ public class ListaProducto {
     public void agregarProductoFinal(Producto nuevoProducto) {
         if (estaVacia()) {
             setPrimerProducto(nuevoProducto);
+            return;
         }
 
         Producto tempProducto = getPrimerProducto();
@@ -133,7 +134,7 @@ public class ListaProducto {
         }
 
         System.out.println("=======================================");
-        System.out.println("Costo Total Acumulado del inventario: $" + String.format("%.2f", costoTotalAcumulado));
+        System.out.println("Costo Total Acumulado del inventario: " + String.format("%.2f", costoTotalAcumulado));
         System.out.println("=======================================\n");
     }
 

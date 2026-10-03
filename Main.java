@@ -5,6 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         //crea una lista donde se guardaran los productos
+
         ListaProducto productos = new ListaProducto();
         //Inicia el menu principal
         menu(productos);
@@ -13,9 +14,10 @@ public class Main {
     public static void menu(ListaProducto productos) {
         //Se utiliza scaner para recibir lo datos del usuario
         Scanner scanner = new Scanner(System.in);
-        int opcion;
+        double opcion;
 
         //Se utiliza un do while para que el menu se repita hasta que el usuario decida salir
+
         do {
 
             System.out.println("\n===== GESTOR DE INVENTARIO =====");
@@ -32,7 +34,7 @@ public class Main {
             opcion = leerEntero(scanner);
             
             //Se utiliza un switch para que el usuario pueda elegir la opcion que desea realizar
-            switch (opcion) {
+            switch ((int) opcion) {
 
                 //Acá se crea el nuevo producto y se agrega al inicio de la lista
                 case 1:
@@ -155,13 +157,13 @@ public class Main {
 
         System.out.print("Precio: ");
 
-        int precio =
+        double  precio =
                 leerEnteroNoNegativo(scanner);
 
 
         System.out.print("Cantidad: ");
 
-        int cantidad =
+        double cantidad =
                 leerEnteroNoNegativo(scanner);
 
         //Aqui se crea un nuevo producto con los datos ingresados por el usuario y se le asigna una lista vacia de imagenes
@@ -213,7 +215,7 @@ public class Main {
         }
 
 
-        int opcion;
+        double opcion;
 
         //Acá se utiliza un do while para que el menu de modificacion se repita hasta que el usuario decida volver al menu principal
         do {
@@ -270,7 +272,7 @@ public class Main {
             opcion = leerEntero(scanner);
 
 
-            switch (opcion) {
+            switch ((int) opcion) {
 
                 case 1:
 
@@ -425,7 +427,7 @@ public class Main {
     // VALIDAR NUMEROS
     
 
-    private static int leerEntero(
+    private static double leerEntero(
             Scanner scanner) {
 
         while (true) {
@@ -448,12 +450,12 @@ public class Main {
 
     
     // VALIDAR NUMEROS NO NEGATIVOS
-    private static int leerEnteroNoNegativo(
+    private static double leerEnteroNoNegativo(
             Scanner scanner) {
 
         while (true) {
 
-            int numero =
+            double numero =
                     leerEntero(scanner);
 
 
