@@ -3,11 +3,12 @@ import java.util.ArrayList;
 
 public class Producto {
     private String nombre, categoria, fechaVencimiento;
-    private int precio, cantidad;
+    private double precio;
+    private double cantidad;
     private ArrayList<String> pathImagenes;
     private Producto siguienteProducto;
 
-    public Producto(String nombre, String categoria, String fechaVencimiento, int precio, ArrayList<String> pathImagenes) {
+    public Producto(String nombre, String categoria, String fechaVencimiento, double precio, ArrayList<String> pathImagenes) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
@@ -18,7 +19,7 @@ public class Producto {
     }
 
     // Metodos
-    public void agregarUnidades(int unidades) {
+    public void agregarUnidades(double unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
@@ -28,7 +29,7 @@ public class Producto {
         System.out.println("Unidades agregadas correctamente");
     }
 
-    public void disminuirUnidades(int unidades) {
+    public void disminuirUnidades(double unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
@@ -110,19 +111,19 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public int getCantidad() {
+    public double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
     }
 
