@@ -16,21 +16,16 @@ public class ListaProducto {
             System.out.println("No hay productos en la lista");
             return null;
         }
-
         Producto tempProducto = getPrimerProducto();
-
         while (tempProducto != null) {
-
             if (tempProducto.getNombre().equals(nombre)) {
                 System.out.println("Se encontro el producto " + nombre);
                 return tempProducto;
             }
             tempProducto = tempProducto.getSiguienteProducto();
         }
-
         System.out.println("No se encontro el producto " + nombre);
         return null;
-
     }
 
     public void agregarProductoInicio(Producto nuevoProducto) {
@@ -39,7 +34,6 @@ public class ListaProducto {
             System.out.println("Producto agregado correctamente");
             return;
         }
-
         nuevoProducto.setSiguienteProducto(getPrimerProducto());
         setPrimerProducto(nuevoProducto);
         System.out.println("Producto agregado correctamente");
@@ -104,40 +98,44 @@ public class ListaProducto {
         return null;
 
     }
-    //Metodo para generar el reporte de costos - Yen Lee
-    public void generarReporteCostos () {
-        if  (estaVacia()) {
-            System.out.println("No se puede generar el reporte: La lista de inventario está vacía. ");
+
+    // Metodo para generar el reporte de costos
+    public void generarReporteCostos() {
+        if (estaVacia()) {
+            System.out.println("No se puede generar el reporte: La lista de inventario está vacía.");
             return;
         }
-        System.out.println("\n===Reporte de costos de inventario===\n");
+        System.out.println("\n=== Reporte de costos de inventario ===\n");
+
+        // Imprimimos el encabezado de la tabla
         System.out.println(String.format("%-20s %-15s %-10s %-15s", "Producto", "Precio Unitario", "Cantidad", "Costo Total"));
-        System.out.println("======================================");
+        System.out.println("===============================================================");
 
         Producto tempProducto = getPrimerProducto();
         double costoTotalAcumulado = 0.0;
 
-        //Recorrido de la lista
+        // Recorrido de la lista
         while (tempProducto != null) {
-            //Calculamos el subtotal: precio * cantidad
+            // Calculamos el subtotal: precio * cantidad
             double subtotalProducto = tempProducto.getPrecio() * tempProducto.getCantidad();
             costoTotalAcumulado += subtotalProducto;
 
-            //Imprimir la fila del producto (formateada para que se vea como una tabla)
-            System.out.println(String.format("%-20s %-14s %-10d %-14.2f",
-            tempProducto.getNombre(),
-            tempProducto.getPrecio(),
-            tempProducto.getCantidad(),
-            subtotalProducto));
-            //Avanzamos con el siguiente nodo
+            // Se agrega (int) antes de tempProducto.getCantidad() para solucionar la excepción
+            System.out.println(String.format("%-20s $%-13.2f %-10d $%-13.2f",
+                    tempProducto.getNombre(),
+                    tempProducto.getPrecio(),
+                    (int) tempProducto.getCantidad(),
+                    subtotalProducto));
+
+            // Avanzamos con el siguiente nodo
             tempProducto = tempProducto.getSiguienteProducto();
         }
 
-        System.out.println("=======================================");
-        System.out.println("Costo Total Acumulado del inventario: " + String.format("%.2f", costoTotalAcumulado));
-        System.out.println("=======================================\n");
+        System.out.println("===============================================================");
+        // Imprimimos el total final usando también %.2f
+        System.out.println("Costo Total Acumulado del inventario: $" + String.format("%.2f", costoTotalAcumulado));
+        System.out.println("===============================================================\n");
     }
-
 
     @Override
     public String toString() {
