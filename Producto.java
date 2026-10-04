@@ -1,13 +1,14 @@
 import java.io.File;
 import java.util.ArrayList;
 
+    // Atributos
 public class Producto {
     private String nombre, categoria, fechaVencimiento;
     private double precio;
     private double cantidad;
     private ArrayList<String> pathImagenes;
     private Producto siguienteProducto;
-
+    //Constructor
     public Producto(String nombre, String categoria, String fechaVencimiento, double precio) {
         this.nombre = nombre;
         this.categoria = categoria;
@@ -19,27 +20,26 @@ public class Producto {
     }
 
     // Metodos
+    //Agrega unidades al stock del producto
     public void agregarUnidades(double unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
         }
-
         setCantidad(getCantidad() + unidades);
         System.out.println("Unidades agregadas correctamente");
     }
 
+    // Disminuye unidades del stock del producto
     public void disminuirUnidades(double unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
         }
-
         if (getCantidad() < unidades) {
             System.out.println("Error: no hay stock suficiente para disminuir");
             return;
         }
-
         setCantidad(getCantidad() - unidades);
         System.out.println("Unidades disminuidas correctamente");
     }

@@ -45,13 +45,9 @@ public class Menu {
                 case 4:
                     mostrarProductos();
                     break;
-                /*
-                 * case 5:
-                 * generarReporteCostos();
-                 * break;
-                 * Falta validar el formateo de los atributos, brinca un error al intentar usar
-                 * el reporte
-                 */
+                case 5:
+                     productos.generarReporteCostos();
+                     break;
                 case 6:
                     System.out.println("Hasta luego");
                     break;
@@ -191,6 +187,38 @@ public class Menu {
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 return updated;
+            }
+        }
+        // Integración de metodo para agregar imagenes
+        System.out.println("Gestionar Imagenes:\n1. Añadir imagen\n2. Eliminar imagen\n3. Ver Imagenes\n Dejar vacio si no desea modificar imagenes \nIngrese una opcion: ");
+        String opcionImgTemp = scanner.nextLine();
+        if (!opcionImgTemp.equals("")) {
+            try {
+                int opcionImg = Integer.parseInt(opcionImgTemp);
+                if (opcionImg == 1) {
+                    System.out.println("Ingrese la ruta de la imagen:");
+                    String ruta = scanner.nextLine();
+                    if (!ruta.equals("")) {
+                        producto.agregarImagen(ruta);
+                    } else {
+                        System.out.println("La ruta no puede estar vacia");
+                    }
+                } else if (opcionImg == 2) {
+                    System.out.println("Ingrese la ruta de la imagen a eliminar:");
+                    String ruta = scanner.nextLine();
+                    if (!ruta.equals("")) {
+                        producto.eliminarImagen(ruta);
+                    } else {
+                        System.out.println("La ruta no puede estar vacia");
+                    }
+                } else if (opcionImg == 3) {
+                    System.out.println("Imagenes del Producto: ");
+                    producto.mostrarImagenes();
+                } else {
+                    System.out.println("Error: Opcion invalida");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: La ruta debe ser un numero");
             }
         }
 
