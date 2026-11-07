@@ -6,7 +6,7 @@ public class Producto {
     private String nombre, categoria, fechaVencimiento;
     private double precio;
     private int stock; // Se agrega este atributo para poder meter y sacar del stock.
-    private double cantidad;
+    private int cantidad;
     private ArrayList<String> pathImagenes;
     private Producto siguienteProducto;
     //Constructor
@@ -23,7 +23,7 @@ public class Producto {
 
     // Metodos
     //Agrega unidades al stock del producto
-    public void agregarUnidades(double unidades) {
+    public void agregarUnidades(int unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
@@ -33,7 +33,7 @@ public class Producto {
     }
 
     // Disminuye unidades del stock del producto
-    public void disminuirUnidades(double unidades) {
+    public void disminuirUnidades(int unidades) {
         if (unidades <= 0) {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
@@ -121,11 +121,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
     public int getStock() {return stock;}

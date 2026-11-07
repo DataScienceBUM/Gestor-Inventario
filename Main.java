@@ -158,7 +158,7 @@ public class Main {
                                 int opcion = Integer.parseInt(opcionTemp);
                                 if (opcion == 1) {
                                         System.out.println("Ingrese la cantidad de existencias a anadir: ");
-                                        double cantidad = Double.parseDouble(scanner.nextLine());
+                                        int cantidad = Integer.parseInt(scanner.nextLine());
                                         if (cantidad <= 0) {
                                                 System.out.println("Error: La cantidad debe ser mayor a 0");
                                                 return updated;
@@ -166,7 +166,7 @@ public class Main {
                                         producto.agregarUnidades(cantidad);
                                 } else if (opcion == 2) {
                                         System.out.println("Ingrese la cantidad de existencias a eliminar: ");
-                                        double cantidad = Double.parseDouble(scanner.nextLine());
+                                        int cantidad = Integer.parseInt(scanner.nextLine());
                                         if (cantidad <= 0) {
                                                 System.out.println("Error: La cantidad debe ser mayor a 0");
                                                 return updated;
