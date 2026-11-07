@@ -28,8 +28,8 @@ public class Producto {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
         }
-        setCantidad(getCantidad() + unidades);
-        System.out.println("Unidades agregadas correctamente");
+        setStock(getStock() + unidades);
+        System.out.println("Unidades agregadas correctamente al stock");
     }
 
     // Disminuye unidades del stock del producto
@@ -38,12 +38,12 @@ public class Producto {
             System.out.println("Error: la cantidad debe ser mayor a cero");
             return;
         }
-        if (getCantidad() < unidades) {
+        if (getStock() < unidades) {
             System.out.println("Error: no hay stock suficiente para disminuir");
             return;
         }
-        setCantidad(getCantidad() - unidades);
-        System.out.println("Unidades disminuidas correctamente");
+        setStock(getStock() - unidades);
+        System.out.println("Unidades disminuidas correctamente del stock");
     }
 
     // IMAGENES
