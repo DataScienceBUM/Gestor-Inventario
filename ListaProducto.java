@@ -108,7 +108,8 @@ public class ListaProducto {
         System.out.println("\n=== Reporte de costos de inventario ===\n");
 
         // Imprimimos el encabezado de la tabla
-        System.out.println(String.format("%-20s %-15s %-10s %-15s", "Producto", "Precio Unitario", "Cantidad", "Costo Total"));
+        System.out.println(
+                String.format("%-20s %-15s %-10s %-15s", "Producto", "Precio Unitario", "Cantidad", "Costo Total"));
         System.out.println("===============================================================");
 
         Producto tempProducto = getPrimerProducto();
@@ -120,7 +121,8 @@ public class ListaProducto {
             double subtotalProducto = tempProducto.getPrecio() * tempProducto.getCantidad();
             costoTotalAcumulado += subtotalProducto;
 
-            // Se agrega (int) antes de tempProducto.getCantidad() para solucionar la excepción
+            // Se agrega (int) antes de tempProducto.getCantidad() para solucionar la
+            // excepción
             System.out.println(String.format("%-20s $%-13.2f %-10d $%-13.2f",
                     tempProducto.getNombre(),
                     tempProducto.getPrecio(),
@@ -135,6 +137,35 @@ public class ListaProducto {
         // Imprimimos el total final usando también %.2f
         System.out.println("Costo Total Acumulado del inventario: $" + String.format("%.2f", costoTotalAcumulado));
         System.out.println("===============================================================\n");
+    }
+
+    public void agregarProducto(Producto nuevoProducto, int cantidad) {
+        Producto tempProducto = buscarProducto(nuevoProducto.getNombre());
+        if (tempProducto != null) {
+            tempProducto.setCantidad(tempProducto.getCantidad() + cantidad);
+        } else {
+            tempProducto = nuevoProducto;
+            tempProducto.setCantidad(cantidad);
+            agregarProductoInicio(nuevoProducto); // Ir mostrando el producto agregado al inicio
+        }
+    }
+
+    public double calcularTotal() {
+        if (estaVacia()) {
+            System.out.println("No hay productos en el carrito");
+            return 0;
+        }
+
+        double total = 0;
+
+        Producto tempProducto = getPrimerProducto();
+
+        while (tempProducto != null) {
+            total += tempProducto.getCantidad() * tempProducto.getPrecio();
+            tempProducto = tempProducto.getSiguienteProducto();
+        }
+
+        return total;
     }
 
     @Override
