@@ -52,6 +52,16 @@ public class Tienda {
             tempProducto = tempProducto.getSiguienteProducto();
         }
 
+        // Descontar las unidades compradas del inventario al momento de encolar para reservar el stock
+        Producto itemReserva = tempCarrito.getPrimerProducto();
+        while (itemReserva != null) {
+            Producto itemInventario = inventario.buscarProducto(itemReserva.getNombre());
+            if (itemInventario != null) {
+                itemInventario.disminuirUnidades(itemReserva.getCantidad());
+            }
+            itemReserva = itemReserva.getSiguienteProducto();
+        }
+
         // Si pasó todas las validaciones de stock, se encola al cliente
         colaClientes.encolar(cliente);
         System.out
@@ -70,16 +80,6 @@ public class Tienda {
         if (carrito == null || carrito.estaVacia()) {
             System.out.println("El cliente " + clienteAtendido.getNombre() + " no tiene productos en su carrito.");
             return;
-        }
-
-        // Descontar las unidades compradas del inventario
-        Producto item = carrito.getPrimerProducto();
-        while (item != null) {
-            Producto itemInventario = inventario.buscarProducto(item.getNombre());
-            if (itemInventario != null) {
-                itemInventario.disminuirUnidades(item.getCantidad());
-            }
-            item = item.getSiguienteProducto();
         }
 
         // Imprimir factura formateada

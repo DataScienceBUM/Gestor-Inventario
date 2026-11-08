@@ -1,17 +1,17 @@
 public class Cliente {
 
-    //definir la prioridad del cliente*/
+    // definir la prioridad del cliente
     public static final int PRIORIDAD_BASICO = 1;
     public static final int PRIORIDAD_AFILIADO = 2;
     public static final int PRIORIDAD_PREMIUM = 3;
 
-    //informacion del cliente*/
+    // informacion del cliente
     private String identificacion;
     private String nombre;
     private int prioridad;
     private ListaProducto carrito;
 
-    //se crea un cliente con un carrito vacio*/
+    // se crea un cliente con un carrito vacio
     public Cliente(String identificacion, String nombre, int prioridad) {
         this.identificacion = identificacion;
         this.nombre = nombre;
@@ -19,7 +19,7 @@ public class Cliente {
         this.carrito = new ListaProducto();
     }
 
-    //se crea un cliente con carrito que ya existe*/
+    // se crea un cliente con carrito que ya existe
     public Cliente(String identificacion, String nombre, int prioridad, ListaProducto carrito) {
         this(identificacion, nombre, prioridad);
         if (carrito != null) {
@@ -27,7 +27,7 @@ public class Cliente {
         }
     }
 
-    //getters y setters/
+    // getters y setters
     public String getIdentificacion() {
         return identificacion;
     }
@@ -48,17 +48,19 @@ public class Cliente {
         return prioridad;
     }
 
- //se asigna la prioridad del clinte
+    // se asigna la prioridad del clinte
     public void setPrioridad(int prioridad) {
         if (!esPrioridadValida(prioridad)) {
             throw new IllegalArgumentException("La prioridad debe ser 1 (Básico), 2 (Afiliado) o 3 (Premium).");
         }
         this.prioridad = prioridad;
     }
-       // retorna el carrito del cliente
+
+    // retorna el carrito del cliente
     public ListaProducto getCarrito() {
         return carrito;
     }
+
     // guarda el carrito de compras del cliente
     public void setCarrito(ListaProducto carrito) {
         this.carrito = carrito;
@@ -86,7 +88,3 @@ public class Cliente {
                 + prioridad + " [" + getTipoCliente() + "]";
     }
 }
-
-
-
-

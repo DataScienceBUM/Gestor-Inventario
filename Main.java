@@ -11,35 +11,31 @@ public class Main {
         }
 
         /**
-         * Carga inicial de datos (Seed Data) para facilitar la revisión del docente.
+         * Carga inicial de datos (Seed Data)
          */
         public static void precargarDatos() {
                 System.out.println("=== Cargando datos iniciales de prueba (Seed Data)... ===");
 
                 // 1. Precarga de productos en el inventario (Arbol BST)
-                tienda.agregarProductoAInventario(new Producto("Arroz", "Granos", "2026-12-31", 1200.0, 50));
-                tienda.agregarProductoAInventario(new Producto("Frijoles", "Granos", "2026-11-30", 1400.0, 40));
-                tienda.agregarProductoAInventario(new Producto("Leche", "Lácteos", "2026-06-15", 950.0, 30));
-                tienda.agregarProductoAInventario(new Producto("Pan", "Panadería", "2026-04-10", 800.0, 25));
-                tienda.agregarProductoAInventario(new Producto("Aceite", "Abarrotes", "2027-01-20", 2200.0, 20));
+                tienda.agregarProductoAInventario(new Producto("Laptop HP", "Computadoras", "N/A", 450000.0, 15));
+                tienda.agregarProductoAInventario(new Producto("Mouse Inalámbrico", "Periféricos", "N/A", 12000.0, 40));
+                tienda.agregarProductoAInventario(new Producto("Teclado Mecánico", "Periféricos", "N/A", 35000.0, 25));
+                tienda.agregarProductoAInventario(new Producto("Monitor 24 Pulg", "Pantallas", "N/A", 85000.0, 20));
+                tienda.agregarProductoAInventario(new Producto("Audífonos Gamer", "Audio", "N/A", 28000.0, 30));
 
                 // 2. Precarga de clientes en la cola con carritos listos
                 Cliente cliente1 = new Cliente("301230456", "Carlos Rodriguez", Cliente.PRIORIDAD_BASICO);
-                Producto compra1 = new Producto("Arroz", "Granos", "2026-12-31", 1200.0, 50);
-                compra1.setCantidad(3);
-                Producto compra2 = new Producto("Leche", "Lácteos", "2026-06-15", 950.0, 30);
-                compra2.setCantidad(2);
-                cliente1.getCarrito().agregarProductoInicio(compra1);
-                cliente1.getCarrito().agregarProductoInicio(compra2);
+                Producto compra1 = new Producto("Mouse Inalámbrico", "Periféricos", "N/A", 12000.0, 40);
+                Producto compra2 = new Producto("Teclado Mecánico", "Periféricos", "N/A", 35000.0, 25);
+                cliente1.getCarrito().agregarProducto(compra1, 2);
+                cliente1.getCarrito().agregarProducto(compra2, 1);
                 tienda.registrarClienteConCarrito(cliente1);
 
                 Cliente cliente2 = new Cliente("109870654", "Mariana Gomez", Cliente.PRIORIDAD_PREMIUM);
-                Producto compra3 = new Producto("Aceite", "Abarrotes", "2027-01-20", 2200.0, 20);
-                compra3.setCantidad(2);
-                Producto compra4 = new Producto("Pan", "Panadería", "2026-04-10", 800.0, 4);
-                compra4.setCantidad(4);
-                cliente2.getCarrito().agregarProductoInicio(compra3);
-                cliente2.getCarrito().agregarProductoInicio(compra4);
+                Producto compra3 = new Producto("Laptop HP", "Computadoras", "N/A", 450000.0, 15);
+                Producto compra4 = new Producto("Monitor 24 Pulg", "Pantallas", "N/A", 85000.0, 20);
+                cliente2.getCarrito().agregarProducto(compra3, 1);
+                cliente2.getCarrito().agregarProducto(compra4, 2);
                 tienda.registrarClienteConCarrito(cliente2);
 
                 System.out.println("=== Datos iniciales cargados con éxito ===\n");
@@ -137,8 +133,11 @@ public class Main {
                         return;
                 }
 
-                System.out.print("Ingrese la fecha de vencimiento (o Enter para omitir): ");
+                System.out.print("Ingrese la fecha de vencimiento / garantía (o Enter para omitir): ");
                 String fechaVencimiento = scanner.nextLine().trim();
+                if (fechaVencimiento.isEmpty()) {
+                        fechaVencimiento = "N/A";
+                }
 
                 double precio = leerDoublePositivo("Ingrese el precio del producto: ");
                 int stock = leerEnteroPositivo("Ingrese la cantidad inicial de stock: ");
@@ -153,45 +152,37 @@ public class Main {
         public static void modificarProducto() {
                 System.out.println("\n--- MODIFICAR PRODUCTO ---");
                 System.out.print("Ingrese el nombre del producto a modificar: ");
-                String nombre = scanner.nextLine().trim();
-                if (nombre.isEmpty()) {
+                String nombreAntiguo = scanner.nextLine().trim();
+                if (nombreAntiguo.isEmpty()) {
                         System.out.println("Error: El nombre no puede estar vacío.");
                         return;
                 }
 
-                Producto producto = tienda.getInventario().buscarProducto(nombre);
-                if (producto == null) {
+                Producto productoOriginal = tienda.getInventario().buscarProducto(nombreAntiguo);
+                if (productoOriginal == null) {
                         return; // buscarProducto ya imprime mensaje de error
                 }
 
-                System.out.println("\nInformación actual del producto:\n" + producto);
+                System.out.println("\nInformación actual del producto:\n" + productoOriginal);
                 System.out.println("(Presione Enter sin escribir nada para conservar el valor actual)");
 
                 System.out.print("Nuevo nombre: ");
                 String nuevoNombre = scanner.nextLine().trim();
-                if (!nuevoNombre.isEmpty()) {
-                        producto.setNombre(nuevoNombre);
-                }
 
                 System.out.print("Nueva categoría: ");
                 String nuevaCat = scanner.nextLine().trim();
-                if (!nuevaCat.isEmpty()) {
-                        producto.setCategoria(nuevaCat);
-                }
 
-                System.out.print("Nueva fecha de vencimiento: ");
+                System.out.print("Nueva fecha de vencimiento / garantía: ");
                 String nuevaFecha = scanner.nextLine().trim();
-                if (!nuevaFecha.isEmpty()) {
-                        producto.setFechaVencimiento(nuevaFecha);
-                }
 
                 System.out.print("Nuevo precio: ");
                 String precioStr = scanner.nextLine().trim();
+                double nuevoPrecio = productoOriginal.getPrecio();
                 if (!precioStr.isEmpty()) {
                         try {
-                                double nuevoPrecio = Double.parseDouble(precioStr);
-                                if (nuevoPrecio > 0) {
-                                        producto.setPrecio(nuevoPrecio);
+                                double tempPrecio = Double.parseDouble(precioStr);
+                                if (tempPrecio > 0) {
+                                        nuevoPrecio = tempPrecio;
                                 } else {
                                         System.out.println("Precio inválido, no modificado.");
                                 }
@@ -206,12 +197,35 @@ public class Main {
                 System.out.println("3. Conservar stock actual");
                 int opStock = leerEntero("Opción: ");
 
+                int stockActualizado = productoOriginal.getStock();
                 if (opStock == 1) {
                         int agregar = leerEnteroPositivo("Cantidad a ingresar: ");
-                        producto.agregarUnidades(agregar);
+                        stockActualizado += agregar;
                 } else if (opStock == 2) {
                         int restar = leerEnteroPositivo("Cantidad a retirar: ");
-                        producto.disminuirUnidades(restar);
+                        if (restar <= stockActualizado) {
+                                stockActualizado -= restar;
+                        } else {
+                                System.out.println("Error: No se puede retirar más stock del existente.");
+                        }
+                }
+
+                // Preservación del árbol BST: Si el nombre cambió, se elimina el nodo anterior y se inserta el nuevo
+                if (!nuevoNombre.isEmpty() && !nuevoNombre.equalsIgnoreCase(nombreAntiguo)) {
+                        tienda.getInventario().eliminar(nombreAntiguo);
+                        String cat = nuevaCat.isEmpty() ? productoOriginal.getCategoria() : nuevaCat;
+                        String fecha = nuevaFecha.isEmpty() ? productoOriginal.getFechaVencimiento() : nuevaFecha;
+                        Producto productoActualizado = new Producto(nuevoNombre, cat, fecha, nuevoPrecio, stockActualizado);
+                        tienda.agregarProductoAInventario(productoActualizado);
+                } else {
+                        if (!nuevaCat.isEmpty()) {
+                                productoOriginal.setCategoria(nuevaCat);
+                        }
+                        if (!nuevaFecha.isEmpty()) {
+                                productoOriginal.setFechaVencimiento(nuevaFecha);
+                        }
+                        productoOriginal.setPrecio(nuevoPrecio);
+                        productoOriginal.setStock(stockActualizado);
                 }
 
                 System.out.println("Producto actualizado correctamente.");
@@ -284,13 +298,13 @@ public class Main {
                 boolean agregando = true;
                 while (agregando) {
                         System.out.print(
-                                        "\nIngrese el nombre del producto que desea agregar al carrito (o 'fin' para terminar): ");
+                                "\nIngrese el nombre del producto que desea agregar al carrito (o 'fin' para terminar): ");
                         String prodNombre = scanner.nextLine().trim();
 
                         if (prodNombre.equalsIgnoreCase("fin")) {
                                 if (cliente.getCarrito().estaVacia()) {
                                         System.out.println(
-                                                        "El carrito no puede estar vacío. Debe agregar al menos un producto.");
+                                                "El carrito no puede estar vacío. Debe agregar al menos un producto.");
                                         continue;
                                 }
                                 agregando = false;
@@ -304,7 +318,7 @@ public class Main {
                         }
 
                         System.out.println("Stock disponible de " + prodInventario.getNombre() + ": "
-                                        + prodInventario.getStock());
+                                + prodInventario.getStock());
                         if (prodInventario.getStock() <= 0) {
                                 System.out.println("No hay existencias disponibles de este producto.");
                                 continue;
@@ -313,22 +327,22 @@ public class Main {
                         int cantidad = leerEnteroPositivo("Ingrese la cantidad a comprar: ");
                         if (cantidad > prodInventario.getStock()) {
                                 System.out.println("Error: La cantidad solicitada (" + cantidad
-                                                + ") supera el stock disponible (" + prodInventario.getStock() + ").");
+                                        + ") supera el stock disponible (" + prodInventario.getStock() + ").");
                                 continue;
                         }
 
                         // Crear el producto para el carrito
                         Producto itemCarrito = new Producto(
-                                        prodInventario.getNombre(),
-                                        prodInventario.getCategoria(),
-                                        prodInventario.getFechaVencimiento(),
-                                        prodInventario.getPrecio(),
-                                        prodInventario.getStock());
-                        itemCarrito.setCantidad(cantidad);
+                                prodInventario.getNombre(),
+                                prodInventario.getCategoria(),
+                                prodInventario.getFechaVencimiento(),
+                                prodInventario.getPrecio(),
+                                prodInventario.getStock());
 
-                        cliente.getCarrito().agregarProductoInicio(itemCarrito);
+                        // Se utiliza agregarProducto para acumular cantidades de productos repetidos
+                        cliente.getCarrito().agregarProducto(itemCarrito, cantidad);
                         System.out.println(">> " + cantidad + " unidad(es) de '" + prodInventario.getNombre()
-                                        + "' agregada(s) al carrito.");
+                                + "' agregada(s) al carrito.");
 
                         System.out.print("¿Desea agregar otro producto? (s/n): ");
                         String continuar = scanner.nextLine().trim();
